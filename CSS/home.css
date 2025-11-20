@@ -1,0 +1,290 @@
+/* Estilos Generales */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Este es el fondo degradado original, lo mantenemos */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+}
+
+.h-100 {
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    min-height: 100vh;
+}
+
+.sidebar-header {
+    background: rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link {
+    color: #bdc3c7;
+    padding: 12px 16px;
+    margin: 4px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+.sidebar .nav-link.active {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Contenido Principal */
+.main-content {
+    background: #f8f9fa;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.main-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Botones de Acción Principales */
+.action-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.action-card:hover .icon-container {
+    transform: scale(1.1);
+}
+
+.action-card:hover .action-arrow {
+    opacity: 1;
+    transform: translateX(10px);
+}
+
+.icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 2rem;
+}
+
+.icon-container i {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.action-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.action-card .card-text {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.action-arrow {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: #667eea;
+    font-size: 1.2rem;
+}
+
+/* Tarjetas de Resumen */
+.summary-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.summary-card .card-body {
+    padding: 20px;
+}
+
+.summary-card i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.summary-card h5 {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.summary-card h3 {
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Efectos Adicionales */
+.action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.action-card:hover::before {
+    left: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1000;
+        width: 250px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .action-card {
+        margin-bottom: 20px;
+    }
+
+    .main-header {
+        padding: 20px !important;
+    }
+
+    .main-header h1 {
+        font-size: 2rem;
+    }
+}
+
+
+/* color de fondo, botones del home */
+/* MANTENEMOS la regla del icon-container que sobreescribiste */
+.icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 2rem;
+}
+
+/*Producto css*/
+.page-link {
+    transition: transform 0.2s cubic-bezier(.4,2,.6,1);
+}
+.page-link:hover {
+    transform: scale(1.07);
+    z-index: 2;
+}
+@keyframes fadeInUpResumen {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* --- REGLAS CRÍTICAS PARA LA TABLA AZUL Y FONDO BLANCO --- */
+
+/* ANULACIÓN DEL FONDO degradado DEL BODY */
+/* Hacemos que el fondo del área principal sea blanco, manteniendo el degradado del body si aplica */
+main {
+    background-color: #ffffff !important;
+    padding-bottom: 50px; 
+}
+
+/* Estilo para el encabezado azul de la tabla */
+#tablaCategorias thead th {
+    background-color: #4682B4; /* Azul de Acero */
+    color: #ffffff;
+    border-color: #4682B4;
+    font-weight: bold;
+}
+
+/* Estilo para todas las celdas (para asegurar el borde completo) */
+#tablaCategorias td, #tablaCategorias th {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #dee2e6;
+}
+
+/* Estilo para las filas impares (efecto rayado en gris claro) */
+#tablaCategorias tbody tr:nth-child(odd) {
+    background-color: #f8f9fa; 
+}
+
+/* Estilo para filas pares (fondo blanco) y base de la tabla */
+#tablaCategorias tbody tr {
+    background-color: #ffffff;
+}
+
+#tablaCategorias {
+    border-collapse: collapse;
+}
+
+.tabla-scroll {
+            max-height: 40vh; /* Reducido para que quepan dos tablas en pantalla */
+            overflow-y: auto;
+        }
+        
+.content {
+    background-color: #ffffff !important; /* Fuerza el fondo a blanco puro */
+    min-height: 100vh; /* Opcional: Asegura que el contenedor ocupe al menos toda la altura de la vista */
+}

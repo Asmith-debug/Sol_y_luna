@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Finanzas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <style>
+        /* Estilos para animaciones y diseño */
+        .summary-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInDown 0.6s ease-out;
+            cursor: default;
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate3d(0, -20px, 0); }
+            to { opacity: 1; transform: none; }
+        }
+        .chart-container {
+            height: 400px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="sidebar-header p-3">
+                    <h5 class="text-white mb-0">
+                        <i class="fas fa-store me-2"></i>
+                        Sistema Gestión
+                    </h5>
+                </div>
+                <nav class="nav flex-column p-3">
+                    <a class="nav-link" href="../home.html">
+                        <i class="fas fa-home me-2"></i> Inicio
+                    </a>
+                    <a class="nav-link" href="venta.html">
+                        <i class="fas fa-shopping-cart me-2"></i> Ventas
+                    </a>
+                    <a class="nav-link" href="productos.html"> 
+                        <i class="fas fa-boxes me-2"></i> Gestión de Productos
+                    </a>
+                    <a class="nav-link" href="devolucion.html">
+                        <i class="fas fa-undo me-2"></i> Devoluciones
+                    </a>
+                    <a class="nav-link" href="categorias.html">
+                        <i class="fas fa-layer-group me-2"></i> Categorías
+                    </a>
+                    <a class="nav-link" href="gestiondeusuarios.html">
+                        <i class="fas fa-users me-2"></i> Gestión de Usuarios
+                    </a>
+                    <a class="nav-link active" href="finanzas.html">
+                        <i class="fas fa-chart-line me-2"></i> Finanzas
+                    </a>
+                </nav>
+            </div>
+
+            <div class="col-md-9 col-lg-10 p-4 main-content">
+                <header class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <h1 class="h3 mb-0 text-primary"><i class="fas fa-chart-line me-2"></i> Panel de Finanzas</h1>
+                    <button class="btn btn-outline-secondary logout-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+                    </button>
+                </header>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card text-center bg-success text-white shadow-sm summary-card">
+                            <div class="card-body">
+                                <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                                <h5 class="card-title">Ventas Totales</h5>
+                                <h2 class="card-text" id="ventasTotales">$0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center bg-danger text-white shadow-sm summary-card">
+                            <div class="card-body">
+                                <i class="fas fa-hand-holding-usd fa-2x mb-2"></i>
+                                <h5 class="card-title">Costo Total (Gastos)</h5>
+                                <h2 class="card-text" id="costosTotales">$0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center bg-primary text-white shadow-sm summary-card">
+                            <div class="card-body">
+                                <i class="fas fa-chart-bar fa-2x mb-2"></i>
+                                <h5 class="card-title">Ganancia Neta</h5>
+                                <h2 class="card-text" id="gananciaNeta">$0</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-8">
+                        <div class="card shadow">
+                            <div class="card-header bg-info text-white">
+                                Ventas vs. Costos por Mes
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="ventasGastosChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card shadow">
+                            <div class="card-header bg-warning text-dark">
+                                Resumen Detallado
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="periodoFiltro" class="form-label">Filtrar por Período</label>
+                                    <select class="form-select" id="periodoFiltro">
+                                        <option value="mes">Último Mes</option>
+                                        <option value="trimestre">Último Trimestre</option>
+                                        <option value="anual" selected>Último Año</option>
+                                    </select>
+                                </div>
+                                <table class="table table-sm table-striped" id="tablaDetalleFinanzas">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Métrica</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Total de Transacciones</td><td id="totalTransacciones">0</td></tr>
+                                        <tr><td>Ventas Promedio</td><td id="ventaPromedio">$0</td></tr>
+                                        <tr><td>Margen Bruto</td><td id="margenBruto">0%</td></tr>
+                                        <tr><td>Productos más Vendidos</td><td id="productosVendidos">N/A</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/finanzas.js"></script>
+    <script src="../JS/script.js"></script>
+</body>
+</html>

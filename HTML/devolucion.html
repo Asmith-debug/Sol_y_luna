@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Devoluciones</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/home.css" rel="stylesheet">
+    <link href="../css/devolucion.css" rel="stylesheet"> 
+    
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="sidebar-header p-3">
+                    <h5 class="text-white mb-0"><i class="fas fa-store me-2"></i> Sistema Gestión</h5>
+                </div>
+                <nav class="nav flex-column p-3">
+                    <a class="nav-link" href="../home.html"><i class="fas fa-home me-2"></i> Inicio</a>
+                    <a class="nav-link" href="venta.html"><i class="fas fa-shopping-cart me-2"></i> Ventas</a>
+                    <a class="nav-link active" href="devolucion.html"><i class="fas fa-undo me-2"></i> Devoluciones</a>
+                    <a class="nav-link" href="inventory.html"><i class="fas fa-boxes me-2"></i> Gestión de Inventario</a>
+                    <a class="nav-link" href="categorias.html"><i class="fas fa-layer-group me-2"></i> Categorías</a>
+                    <a class="nav-link" href="gestiondeusuarios.html"><i class="fas fa-users me-2"></i> Gestión de Usuarios</a>
+                    <a class="nav-link" href="finanzas.html"><i class="fas fa-chart-line me-2"></i> Finanzas</a>
+                    <a class="nav-link logout-link" href="#"><i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión</a>
+                </nav>
+            </div>
+
+            <div class="col-md-9 col-lg-10 content p-4">
+                <h1 class="display-5 fw-light mb-4"><i class="fas fa-undo me-2 text-warning"></i> Gestión de Devoluciones de Venta</h1>
+
+                <div class="card shadow-lg border-0 mb-5">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i> Ventas Activas (Candidatas a Devolución)</h5>
+                        <span class="badge bg-light text-primary p-2">Solo ventas con estado **ACTIVA**</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive tabla-scroll">
+                            <table class="table table-striped table-hover custom-table-border mb-0">
+                                <thead class="bg-primary text-white sticky-top">
+                                    <tr>
+                                        <th scope="col">ID Venta</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total Venta</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Vendedor</th>
+                                        <th scope="col">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoActivas"> <tr><td colspan="7" class="text-center py-5"><i class="fas fa-sync fa-spin me-2"></i> Cargando ventas activas...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-history me-2"></i> Historial de Devoluciones Realizadas</h5>
+                        <span class="badge bg-light text-success p-2">Ventas con estado **DEVUELTA**</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive tabla-scroll">
+                            <table class="table table-striped table-hover custom-table-border mb-0">
+                                <thead class="bg-success text-white sticky-top">
+                                    <tr>
+                                        <th scope="col">ID Venta</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total Venta</th>
+                                        <th scope="col">Fecha Original</th>
+                                        <th scope="col">Vendedor</th>
+                                        <th scope="col">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCuerpoHistorial"> <tr><td colspan="7" class="text-center py-5"><i class="fas fa-sync fa-spin me-2"></i> Cargando historial de devoluciones...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmarDevolucion" tabindex="-1" aria-labelledby="modalConfirmarDevolucionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalConfirmarDevolucionLabel"><i class="fas fa-exclamation-triangle me-2"></i> Confirmación Crítica de Devolución</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">¿Está **absolutamente seguro** de que desea procesar la devolución para la siguiente venta?</p>
+                    <div class="p-3 mb-3 bg-light border rounded">
+                        <p class="mb-1">**ID de Venta:** <span id="confVentaId" class="fw-bold text-primary"></span></p>
+                        <p class="mb-1">**Producto:** <span id="confProducto" class="fw-bold text-dark"></span></p>
+                        <p class="mb-0">**Cantidad a Revertir:** <span id="confCantidad" class="fw-bold text-danger fs-5"></span> unidades</p>
+                    </div>
+                    <div class="alert alert-danger mt-3 small">
+                        <i class="fas fa-lock me-2"></i> **ADVERTENCIA:** Esta acción es **IRREVERSIBLE**. Registrará la devolución y automáticamente **aumentará el stock** del producto por la cantidad indicada.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-1"></i> Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarDevolucionModal"><i class="fas fa-undo me-1"></i> Sí, Procesar Devolución</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/devolucion.js"></script>
+    <script src="../JS/script.js"></script>
+</body>
+</html>

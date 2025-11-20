@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Categorías</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/home.css"> 
+    
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="sidebar-header p-3">
+                    <h5 class="text-white mb-0">
+                        <i class="fas fa-store me-2"></i>
+                        Sistema Gestión
+                    </h5>
+                </div>
+                <nav class="nav flex-column p-3">
+                    <a class="nav-link" href="../home.html">
+                        <i class="fas fa-home me-2"></i> Inicio
+                    </a>
+                    <a class="nav-link" href="venta.html">
+                        <i class="fas fa-shopping-cart me-2"></i> Ventas
+                    </a>
+                    <a class="nav-link active" href="devolucion.html">
+                        <i class="fas fa-undo me-2"></i> Devoluciones
+                    </a>
+                    <a class="nav-link" href="finanzas.html">
+                        <i class="fas fa-chart-line me-2"></i> Finanzas
+                    </a>
+                    <a class="nav-link" href="productos.html">
+                        <i class="fas fa-boxes me-2"></i> Gestión de Inventario
+                    </a>
+                    <a class="nav-link" href="gestiondeusuarios.html">
+                        <i class="fas fa-users-cog me-2"></i> Gestión de Usuarios
+                    </a>
+                    <a class="nav-link" href="categorias.html">
+                        <i class="fas fa-tags me-2"></i>
+                        Categorías
+                    </a>
+                    <div class="d-flex justify-content-center" style="margin-top: 26rem;">
+                    <button class="btn btn-danger" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </button>
+                </div>
+                </nav>
+            </div>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Gestión de Categorías</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarCategoria">
+                            <i class="fas fa-plus me-1"></i> Agregar Categoría
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-4">
+                    <table class="table" id="tablaCategorias">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">ID</th>
+                                <th style="width: 70%;">Nombre</th>
+                                <th style="width: 20%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr><td colspan="3" class="text-center">Cargando categorías...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modalAgregarCategoria" tabindex="-1" aria-labelledby="modalAgregarCategoriaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarCategoriaLabel">Agregar Nueva Categoría</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formCategoria">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="categoriaNombre" class="form-label">Nombre de Categoría</label>
+                            <input type="text" class="form-control" id="categoriaNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoriaDescripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="categoriaDescripcion" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Categoría</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarCategoria" tabindex="-1" aria-labelledby="modalEditarCategoriaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarCategoriaLabel">Editar Categoría</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formEditarCategoria">
+                    <div class="modal-body">
+                        <input type="hidden" id="categoriaIdEditar">
+                        <div class="mb-3">
+                            <label for="categoriaNombreEditar" class="form-label">Nombre de Categoría</label>
+                            <input type="text" class="form-control" id="categoriaNombreEditar" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/categorias.js"></script> 
+    <script src="../JS/script.js"></script>
+</body>
+</html>

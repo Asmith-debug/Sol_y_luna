@@ -1,0 +1,10 @@
+{
+    "name": "marce/solylunadefinitivo",
+    "description": "prueba",
+    "autoload": {
+        "psr-4": {
+            "Marce\\Solylunadefinitivo\\": "src/"
+        }
+    },
+    "require": {}
+}
